@@ -1,6 +1,6 @@
 {
   "name": "modular-plugin-url-checker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An url checker plugin for modular-engine system, to handle URL parameters",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
