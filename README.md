@@ -1,2 +1,3 @@
-# modular-plugins
-A collection of various and useful plugins for modular-engine
+# modular-plugin-url-checker
+
+An url checker plugin for modular-engine system, to handle URL parameters
