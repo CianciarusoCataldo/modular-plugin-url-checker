@@ -1,10 +1,34 @@
+/**
+ * @file {@link https://github.com/CianciarusoCataldo/modular-plugin-url-checker modular-plugin-url-checker} internal query parameters file
+ *
+ * @see https://cianciarusocataldo.github.io/modular-plugin-url-checker?id=config
+ * @see https://cianciarusocataldo.github.io/modular-engine/docs
+ *
+ * @author Cataldo Cianciaruso <https://github.com/CianciarusoCataldo>
+ *
+ * @copyright Cataldo Cianciaruso 2022
+ */
+
 import { ModularEngineConfig } from "modular-engine-types";
 
 import { computeValue } from "modular-utils";
 
-import { UrlCheckerQueryHandler } from "./types";
+import { UrlCheckerPluginQueryHandler } from "./types";
 
-export const queryParametersHandlers: Record<string, UrlCheckerQueryHandler> = {
+/**
+ * {@link https://github.com/CianciarusoCataldo/modular-plugin-url-checker modular-plugin-url-checker} internal query parameters
+ *
+ * @see https://cianciarusocataldo.github.io/modular-plugin-url-checker?id=config
+ * @see https://cianciarusocataldo.github.io/modular-engine/docs
+ *
+ * @author Cataldo Cianciaruso <https://github.com/CianciarusoCataldo>
+ *
+ * @copyright Cataldo Cianciaruso 2022
+ */
+export const queryParametersHandlers: Record<
+  string,
+  UrlCheckerPluginQueryHandler
+> = {
   config: ({ urlParam, config }) => {
     const parsedConfig = computeValue<ModularEngineConfig>(
       () => JSON.parse(urlParam),
