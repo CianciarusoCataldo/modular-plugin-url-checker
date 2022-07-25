@@ -9,7 +9,7 @@
 
 <br>
 
-An url checker plugin for [modular-engine](https://github.com/CianciarusoCataldo/modular-engine) system, to handle URL parameters
+An url checker plugin for [modular-engine system](https://github.com/CianciarusoCataldo/modular-engine), to handle URL parameters
 
 <br>
 
@@ -81,29 +81,26 @@ Internally, this plugin has 2 query parameter handler pre-set:
 
 ## Integration with other plugins
 
-This plugin expose some fields to work with any other plugin. If you want to interact with it, using your custom plugin, just check the `enabledPlugins` parameter inside your `format` function for `urlChecker`. If true, you can add custom params to the plugin (look at the [config](#config) section). For example, to create a custom query parameter, inside the `format` function of your custom plugin:
+This plugin expose some fields to work with any other plugin. If you want to interact with it, using your custom plugin, add an interaction with `urlChecker` inside your custom plugin:
 
 ```tsx
 //Just a skeleton of a custom plugin that interacts with url-checker plugin
 const customPlugin = () => ({
   // Custom plugin stuffs
 
-  format: (config, enabledPlugins) => {
-    // Custom plugin stuffs
+  interactions: [
+    {
+      plugin: "urlChecker",
+      effect: (field) => {
+        //Add the custom handler
+        field.queryParameters["testParam"] = ({ config, urlParam, store }) =>
+          alert("param value : " + urlParam);
 
-    //Check for `urlChecker` plugin
-    if (enabledPlugins.urlChecker) {
-      //Add the custom handler
-      config.urlChecker.queryParameters["testParam"] = ({
-        config,
-        urlParam,
-        store,
-      }) => alert("param value : " + urlParam);
-
-      //In this example, we want to process the param after the store creation, so we add it to postInit array
-      config.urlChecker.postInit.push("testParam");
-    }
-  },
+        //In this example, we want to process the param after the store creation, so we add it to postInit array
+        field.postInit.push("testParam");
+      },
+    },
+  ],
 });
 ```
 
@@ -113,9 +110,9 @@ const customPlugin = () => ({
 
 ## Included libraries
 
-- [Modular-engine-types](https://github.com/CianciarusoCataldo/modular-engine-types) - to use modular-engine type definitions inside the plugin
+- [Modular-engine-tools](https://github.com/CianciarusoCataldo/modular-engine-tools) - to work easier with modular-engine
 - [Modular-utils](https://github.com/CianciarusoCataldo/modular-utils) - to use shared util functions during init process
-- Modular-plugin-localization is written entirely with [Typescript](https://www.typescriptlang.org/)
+- Modular-plugin-url-checker is written entirely with [Typescript](https://www.typescriptlang.org/)
 
 <br>
 

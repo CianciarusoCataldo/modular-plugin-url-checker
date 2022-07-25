@@ -15,6 +15,7 @@ import { UrlCheckerPlugin } from "./types";
 import { queryParametersHandlers } from "./query-parameters";
 
 import { processParams } from "./helper";
+import { createModularEnginePlugin } from "modular-engine-tools";
 
 /**
  * {@link https://github.com/CianciarusoCataldo/modular-plugin-url-checker modular-plugin-url-checker} create function. To use it, include it inside
@@ -48,58 +49,60 @@ import { processParams } from "./helper";
  *
  * @copyright Cataldo Cianciaruso 2022
  */
-const urlChecker: UrlCheckerPlugin = () => {
-  let params: Record<string, any> = {};
+const urlChecker: UrlCheckerPlugin = createModularEnginePlugin(
+  "urlChecker",
+  () => {
+    let params: Record<string, any> = {};
 
-  if (window.location.search) {
-    new URLSearchParams(window.location.search).forEach((urlParam, param) => {
-      params[param] = computeValue(
-        () => urlParam.replace(/(^"|"$)/g, "").replace(/(^'|'$)/g, ""),
-        urlParam
-      );
-    });
+    if (window.location.search) {
+      new URLSearchParams(window.location.search).forEach((urlParam, param) => {
+        params[param] = computeValue(
+          () => urlParam.replace(/(^"|"$)/g, "").replace(/(^'|'$)/g, ""),
+          urlParam
+        );
+      });
 
-    if (window.history.replaceState) {
-      window.history.replaceState(
-        window.history.state,
-        window.document.title,
-        window.location.href.split("?")[0]
-      );
+      if (window.history.replaceState) {
+        window.history.replaceState(
+          window.history.state,
+          window.document.title,
+          window.location.href.split("?")[0]
+        );
+      }
     }
+
+    return {
+      field: (config) => {
+        const urlCheckerConfig = config.urlChecker || {};
+        const initialParams = Object.keys(queryParametersHandlers);
+        const params = urlCheckerConfig.before || [];
+
+        return {
+          name: "urlChecker",
+          content: {
+            queryParameters: urlCheckerConfig.queryParameters || {},
+            before: initialParams.concat(params),
+            after: urlCheckerConfig.after || [],
+          },
+        };
+      },
+
+      before: ({ config }) =>
+        processParams({
+          elements: config.urlChecker.before,
+          config,
+          params,
+        }),
+
+      after: ({ config, store }) =>
+        processParams({
+          elements: config.urlChecker.after,
+          config,
+          store,
+          params,
+        }),
+    };
   }
-
-  return {
-    feature: "urlChecker",
-    create: (config) => {
-      const urlCheckerConfig = config.urlChecker || {};
-      const initialParams = Object.keys(queryParametersHandlers);
-      const params = urlCheckerConfig.before || [];
-
-      return {
-        field: "urlChecker",
-        content: {
-          queryParameters: urlCheckerConfig.queryParameters || {},
-          before: initialParams.concat(params),
-          after: urlCheckerConfig.after || [],
-        },
-      };
-    },
-
-    before: ({ config }) =>
-      processParams({
-        elements: config.urlChecker.before,
-        config,
-        params,
-      }),
-
-    after: ({ config, store }) =>
-      processParams({
-        elements: config.urlChecker.after,
-        config,
-        store,
-        params,
-      }),
-  };
-};
+);
 
 export default urlChecker;

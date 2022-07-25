@@ -2,6 +2,7 @@
 
 ## Versions
 
+- [0.3.0](#030)
 - [0.2.0](#020)
 - [0.1.0](#010)
 
@@ -10,6 +11,12 @@
 ---
 
 ## Changes
+
+<br>
+
+### 0.3.0
+
+- Use new modular-engine plugin format
 
 <br>
 
