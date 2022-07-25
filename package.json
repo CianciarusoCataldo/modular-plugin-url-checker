@@ -1,6 +1,6 @@
 {
   "name": "modular-plugin-url-checker",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "An url checker plugin for modular-engine system, to handle URL parameters",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/CianciarusoCataldo/modular-plugin-url-checker#readme",
   "peerDependencies": {
-    "modular-engine-tools": "^0.5.1",
+    "modular-engine-tools": "^0.5.2",
     "modular-utils": "^0.4.0"
   },
   "devDependencies": {
@@ -36,7 +36,7 @@
     "enzyme": "^3.11.0",
     "jest": "^27.4.7",
     "jest-transform-stub": "^2.0.0",
-    "modular-engine-tools": "^0.5.1",
+    "modular-engine-tools": "^0.5.2",
     "modular-utils": "^0.4.0",
     "rollup": "^2.44.0",
     "rollup-plugin-banner2": "^1.2.2",
